@@ -1,0 +1,12 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/bsmg/BSIPA-MetadataFileSchema/master/Schema.json",
+  "id": "DetailedFlyingScore",
+  "name": "DetailedFlyingScore",
+  "author": "aPinat",
+  "version": "1.0.0",
+  "description": "Make the flying scores more detailed.",
+  "gameVersion": "1.11.2",
+  "dependsOn": {
+    "BSIPA": "^4.1.0"
+  }
+}
