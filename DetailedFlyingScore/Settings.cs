@@ -4,12 +4,13 @@ namespace DetailedFlyingScore
 {
     internal static class Settings
     {
-        internal const string BeforeCutOk = "<line-height=75%><alpha=#FF>_";
-        internal const string BeforeCutNg = "<line-height=75%><alpha=#00>_";
+        //http://digitalnativestudios.com/textmeshpro/docs/rich-text
+        internal const string BeforeCutOk = "<line-height=75%><alpha=#FF> _";
+        internal const string BeforeCutNg = "<line-height=75%><alpha=#00> _";
         internal const string AfterCutOk = "<alpha=#FF>_\\n<line-height=18%><alpha=#FF>";
         internal const string AfterCutNg = "<alpha=#00>_\\n<line-height=18%><alpha=#FF>";
-        internal const string CutDistanceOk = "\\n<alpha=#FF>__";
-        internal const string CutDistanceNg = "\\n<alpha=#00>__";
+        internal const string CutDistanceOk = "\\n<alpha=#FF> __";
+        internal const string CutDistanceNg = "\\n<alpha=#00> __";
 
         internal static Color GetTextColor(int score)
         {
