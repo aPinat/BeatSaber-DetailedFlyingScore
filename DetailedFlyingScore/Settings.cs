@@ -4,7 +4,7 @@ namespace DetailedFlyingScore
 {
     internal static class Settings
     {
-        //http://digitalnativestudios.com/textmeshpro/docs/rich-text
+        // http://digitalnativestudios.com/textmeshpro/docs/rich-text
         internal const string BeforeCutOk = "<line-height=75%><alpha=#FF> _";
         internal const string BeforeCutNg = "<line-height=75%><alpha=#00> _";
         internal const string AfterCutOk = "<alpha=#FF>_\\n<line-height=18%><alpha=#FF>";

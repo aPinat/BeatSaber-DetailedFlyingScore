@@ -10,23 +10,25 @@ namespace DetailedFlyingScore
     {
         [HarmonyPatch("InitAndPresent")]
         [HarmonyPostfix]
-        private static void InitAndPresentPostfix(NoteCutInfo ____noteCutInfo, TextMeshPro ____text, SpriteRenderer ____maxCutDistanceScoreIndicator, ref Color ____color)
+        private static void InitAndPresentPostfix(ISaberSwingRatingCounter ____saberSwingRatingCounter, float ____cutDistanceToCenter, TextMeshPro ____text,
+            SpriteRenderer ____maxCutDistanceScoreIndicator, ref Color ____color)
         {
             ____text.richText = true;
             ____maxCutDistanceScoreIndicator.enabled = false;
-            SetFlyingScore(____noteCutInfo, ____text, ref ____color);
+            SetFlyingScore(____saberSwingRatingCounter, ____cutDistanceToCenter, ____text, ref ____color);
         }
 
-        [HarmonyPatch("HandleSaberSwingRatingCounterDidChangeEvent")]
+        [HarmonyPatch("HandleSaberSwingRatingCounterDidChange")]
         [HarmonyPostfix]
-        private static void HandleSaberSwingRatingCounterDidChangeEventPostfix(NoteCutInfo ____noteCutInfo, TextMeshPro ____text, ref Color ____color)
+        private static void HandleSaberSwingRatingCounterDidChangeEventPostfix(ISaberSwingRatingCounter ____saberSwingRatingCounter, float ____cutDistanceToCenter, TextMeshPro ____text,
+            ref Color ____color)
         {
-            SetFlyingScore(____noteCutInfo, ____text, ref ____color);
+            SetFlyingScore(____saberSwingRatingCounter, ____cutDistanceToCenter, ____text, ref ____color);
         }
 
-        private static void SetFlyingScore(NoteCutInfo ____noteCutInfo, TextMeshPro ____text, ref Color ____color)
+        private static void SetFlyingScore(ISaberSwingRatingCounter ____saberSwingRatingCounter, float ____cutDistanceToCenter, TextMeshPro ____text, ref Color ____color)
         {
-            ScoreModel.RawScoreWithoutMultiplier(____noteCutInfo, out var beforeCutRawScore, out var afterCutRawScore, out var cutDistanceRawScore);
+            ScoreModel.RawScoreWithoutMultiplier(____saberSwingRatingCounter, ____cutDistanceToCenter, out var beforeCutRawScore, out var afterCutRawScore, out var cutDistanceRawScore);
 
             var beforeCut = beforeCutRawScore == 70 ? Settings.BeforeCutOk : Settings.BeforeCutNg;
             var afterCut = afterCutRawScore == 30 ? Settings.AfterCutOk : Settings.AfterCutNg;
