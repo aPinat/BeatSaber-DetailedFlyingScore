@@ -4,50 +4,49 @@ using HarmonyLib;
 using IPA;
 using IPA.Logging;
 
-namespace DetailedFlyingScore
+namespace DetailedFlyingScore;
+
+[Plugin(RuntimeOptions.DynamicInit)]
+public class Plugin
 {
-    [Plugin(RuntimeOptions.DynamicInit)]
-    public class Plugin
+    private const string HarmonyId = "de.aPinat.DetailedFlyingScore";
+    private readonly Harmony _harmony;
+    private readonly Logger _logger;
+
+    [Init]
+    public Plugin(Logger logger)
     {
-        private readonly Logger _logger;
-        private readonly Harmony _harmony;
-        private const string HarmonyId = "de.aPinat.DetailedFlyingScore";
+        _logger = logger;
+        _logger.Debug("Logger initialized.");
+        _harmony = new Harmony(HarmonyId);
+    }
 
-        [Init]
-        public Plugin(Logger logger)
+    [OnEnable]
+    public void OnEnable()
+    {
+        try
         {
-            _logger = logger;
-            _logger.Debug("Logger initialized.");
-            _harmony = new Harmony(HarmonyId);
+            _logger.Debug("Applying Harmony patches.");
+            _harmony.PatchAll(Assembly.GetExecutingAssembly());
         }
-
-        [OnEnable]
-        public void OnEnable()
+        catch (Exception ex)
         {
-            try
-            {
-                _logger.Debug("Applying Harmony patches.");
-                _harmony.PatchAll(Assembly.GetExecutingAssembly());
-            }
-            catch (Exception ex)
-            {
-                _logger.Critical("Error applying Harmony patches: " + ex.Message);
-                _logger.Debug(ex);
-            }
+            _logger.Critical("Error applying Harmony patches: " + ex.Message);
+            _logger.Debug(ex);
         }
+    }
 
-        [OnDisable]
-        public void OnDisable()
+    [OnDisable]
+    public void OnDisable()
+    {
+        try
         {
-            try
-            {
-                _harmony.UnpatchAll(HarmonyId);
-            }
-            catch (Exception ex)
-            {
-                _logger.Critical("Error removing Harmony patches: " + ex.Message);
-                _logger.Debug(ex);
-            }
+            _harmony.UnpatchAll(HarmonyId);
+        }
+        catch (Exception ex)
+        {
+            _logger.Critical("Error removing Harmony patches: " + ex.Message);
+            _logger.Debug(ex);
         }
     }
 }
